@@ -51,11 +51,6 @@ var BugTable = React.createClass({
 	}
 });
 
-var bugData = [
-	{id: 1, priority: 'P1', status: 'Open', owner: 'Ravan', title: 'App crashes on open'},
-	{id: 2, priority: 'P2', status: 'New', owner: 'Eddie', title: 'Misaligned border on panel'},
-];
-
 var BugAdd = React.createClass({
 	render: function() {
 		console.log("Rendering BugAdd");
@@ -81,7 +76,7 @@ var BugAdd = React.createClass({
 
 var BugList = React.createClass({
 	getInitialState: function() {
-		return {bugs: bugData};
+		return {bugs: []};
 	},
 	render: function() { 
 		console.log("Rendering bug list, num items:", this.state.bugs.length);
@@ -95,6 +90,12 @@ var BugList = React.createClass({
 				<BugAdd addBug={this.addBug}/>
 			</div>
 		)
+	},
+
+	componentDidMount: function() {
+		$.ajax('/api/bugs').done(function(data) {
+			this.setState({bugs: data});	
+		}.bind(this));
 	},
 
 	addBug: function(bug) {
