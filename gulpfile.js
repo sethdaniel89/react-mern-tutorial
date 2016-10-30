@@ -26,7 +26,7 @@ gulp.task('watch', function() {
 			.on('error', function(err) {
 				console.error(err.message);
 				console.error(err.codeFrame);
-			});
+			})
 			.pipe(source('bundle.js'))
 			.pipe(gulp.dest('static/'));
 		console.log("Bundle updated, success");
